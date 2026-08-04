@@ -113,6 +113,7 @@
         tr.innerHTML =
           '<td>' + (i + 1) + '</td>' +
           '<td class="nombre">' + esc(p.nombre) + '</td>' +
+          '<td>' + p.cantidad + '</td>' +
           '<td>' + p.costo + '</td>' +
           '<td>' + p.precio + '</td>' +
           '<td>' + esc(p.moneda) + '</td>' +
@@ -139,7 +140,7 @@
 
     var ingresos = 0;
     productos.forEach(function (p) {
-      ingresos += aDOP(p.precio, p.moneda, config);
+      ingresos += aDOP(p.precio, p.moneda, config) * (p.cantidad || 1);
     });
 
     var capital = aDOP(config.capitalMonto, config.capitalMoneda, config);
@@ -203,10 +204,12 @@
     var nombre = document.getElementById('prod-nombre').value.trim();
     var costo = document.getElementById('prod-costo').value;
     var precio = document.getElementById('prod-precio').value;
+    var cantidad = document.getElementById('prod-cantidad').value;
 
     if (nombre === '') return 'El nombre del producto es obligatorio.';
     if (costo === '' || isNaN(Number(costo)) || Number(costo) < 0) return 'El costo debe ser un número mayor o igual a 0.';
     if (precio === '' || isNaN(Number(precio)) || Number(precio) < 0) return 'El precio de venta debe ser un número mayor o igual a 0.';
+    if (cantidad === '' || !Number.isInteger(Number(cantidad)) || Number(cantidad) < 1) return 'La cantidad debe ser un número entero mayor o igual a 1.';
     return null;
   }
 
@@ -224,6 +227,7 @@
       var id = document.getElementById('prod-id').value;
       var datos = {
         nombre: document.getElementById('prod-nombre').value.trim(),
+        cantidad: Number(document.getElementById('prod-cantidad').value),
         costo: Number(document.getElementById('prod-costo').value),
         precio: Number(document.getElementById('prod-precio').value),
         moneda: document.getElementById('prod-moneda').value
@@ -265,6 +269,7 @@
         var p = productos[idx];
         document.getElementById('prod-id').value = p.id;
         document.getElementById('prod-nombre').value = p.nombre;
+        document.getElementById('prod-cantidad').value = p.cantidad;
         document.getElementById('prod-costo').value = p.costo;
         document.getElementById('prod-precio').value = p.precio;
         document.getElementById('prod-moneda').value = p.moneda;
@@ -285,6 +290,7 @@
   function limpiarProductoForm() {
     document.getElementById('prod-id').value = '';
     document.getElementById('prod-nombre').value = '';
+    document.getElementById('prod-cantidad').value = '';
     document.getElementById('prod-costo').value = '';
     document.getElementById('prod-precio').value = '';
     document.getElementById('prod-moneda').value = 'DOP';

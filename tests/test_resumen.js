@@ -21,7 +21,7 @@ describe('Resumen de ganancias (US-07)', function () {
     }
   });
 
-  async function crearProducto(nombre, costo, precio, moneda) {
+  async function crearProducto(nombre, costo, precio, cantidad, moneda) {
     const n = await driver.findElement(By.id('prod-nombre'));
     await n.clear();
     await n.sendKeys(nombre);
@@ -31,6 +31,9 @@ describe('Resumen de ganancias (US-07)', function () {
     const p = await driver.findElement(By.id('prod-precio'));
     await p.clear();
     await p.sendKeys(precio);
+    const q = await driver.findElement(By.id('prod-cantidad'));
+    await q.clear();
+    await q.sendKeys(cantidad);
     if (moneda) {
       const sel = await driver.findElement(By.id('prod-moneda'));
       await sel.findElement(By.css('option[value="' + moneda + '"]')).click();
@@ -80,21 +83,21 @@ describe('Resumen de ganancias (US-07)', function () {
   }
 
   it('US-07 [camino feliz]: con capital prestado calcula devolución y ganancia propia', async function () {
-    await crearProducto('Laptop', '5000', '20000', 'DOP');
+    await crearProducto('Laptop', '5000', '20000', '2', 'DOP');
     await guardarCapital('10000', 'DOP', true, '6000');
 
-    assert.ok(Math.abs(await valorDe('res-ingresos') - 20000) < 0.01, 'Ingresos = 20000');
+    assert.ok(Math.abs(await valorDe('res-ingresos') - 40000) < 0.01, 'Ingresos = 40000 (precio x cantidad)');
     assert.ok(Math.abs(await valorDe('res-capital') - 10000) < 0.01, 'Capital = 10000');
-    assert.ok(Math.abs(await valorDe('res-ganancia-total') - 10000) < 0.01, 'Ganancia total = 10000');
+    assert.ok(Math.abs(await valorDe('res-ganancia-total') - 30000) < 0.01, 'Ganancia total = 30000');
     assert.ok(Math.abs(await valorDe('res-devolucion') - 6000) < 0.01, 'Devolución = 6000');
-    assert.ok(Math.abs(await valorDe('res-ganancia-propia') - 4000) < 0.01, 'Ganancia propia = 4000');
+    assert.ok(Math.abs(await valorDe('res-ganancia-propia') - 24000) < 0.01, 'Ganancia propia = 24000');
 
     const row = await driver.findElement(By.id('res-devolucion-row'));
     assert.strictEqual(await row.isDisplayed(), true, 'La devolución debe ser visible');
   });
 
   it('US-07 [negativa]: capital sin prestar oculta devolución y marca la pérdida', async function () {
-    await crearProducto('Mesa', '5000', '8000', 'DOP');
+    await crearProducto('Mesa', '5000', '8000', '1', 'DOP');
     await guardarCapital('10000', 'DOP', false, null);
 
     assert.ok(Math.abs(await valorDe('res-ganancia-total') - (-2000)) < 0.01, 'Ganancia total = -2000');
@@ -109,7 +112,7 @@ describe('Resumen de ganancias (US-07)', function () {
 
   it('US-07 [límite]: capital en cero y tasas mínimas dan ganancia propia = ingresos', async function () {
     await guardarTasas('0.01', '0.01');
-    await crearProducto('Collar', '1', '2', 'USD');
+    await crearProducto('Collar', '1', '2', '1', 'USD');
     await guardarCapital('0', 'DOP', false, null);
 
     assert.ok(Math.abs(await valorDe('res-ingresos') - 0.02) < 0.001, 'Ingresos = 0.02');

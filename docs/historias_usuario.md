@@ -47,14 +47,16 @@ Estas historias deben copiarse al tablero de **Azure DevOps** (o **Jira**) en el
 **para** tener control de mi mercancía y calcular mis ganancias.
 
 **Criterios de aceptación:**
-- El formulario solicita nombre, costo original, precio de venta y moneda (DOP, USD, EUR).
+- El formulario solicita nombre, cantidad comprada, costo original, precio de venta y moneda (DOP, USD, EUR).
 - Al guardar un producto válido aparece una fila nueva en la tabla "Mis productos".
+- La cantidad debe ser un número entero mayor o igual a 1 (límite inferior).
 - El costo y el precio aceptan valores desde 0 (límite inferior) y con decimales.
 - Se aceptan nombres largos (ej. 200 caracteres).
 
 **Criterios de rechazo:**
 - No se crea el producto si el nombre está vacío.
 - No se crea el producto si el costo o el precio no son números mayores o iguales a 0.
+- No se crea el producto si la cantidad está vacía, no es un entero o es menor a 1.
 - Se muestra un mensaje de error en los casos anteriores.
 
 ---
@@ -66,7 +68,7 @@ Estas historias deben copiarse al tablero de **Azure DevOps** (o **Jira**) en el
 **para** consultar la mercancía disponible.
 
 **Criterios de aceptación:**
-- La tabla "Mis productos" muestra todos los productos registrados con nombre, costo, precio y moneda.
+- La tabla "Mis productos" muestra todos los productos registrados con nombre, cantidad, costo, precio y moneda.
 - Cada producto se numera consecutivamente.
 - Si no hay productos, se muestra el mensaje "No hay productos registrados todavía" y la tabla se oculta.
 
@@ -84,12 +86,13 @@ Estas historias deben copiarse al tablero de **Azure DevOps** (o **Jira**) en el
 
 **Criterios de aceptación:**
 - El botón "Editar" de cada fila carga los datos del producto en el formulario.
-- Al guardar la edición se actualizan nombre, costo, precio o moneda en la tabla.
+- Al guardar la edición se actualizan nombre, cantidad, costo, precio o moneda en la tabla.
 - El precio anterior no debe persistir después de la actualización.
 
 **Criterios de rechazo:**
 - No se actualiza el producto si el nombre queda vacío; se muestra mensaje de error.
 - No se actualiza el producto si el costo o precio son inválidos.
+- No se actualiza el producto si la cantidad no es un entero mayor o igual a 1.
 - Si hay un error, los datos originales del producto se mantienen.
 
 ---
@@ -121,6 +124,7 @@ Estas historias deben copiarse al tablero de **Azure DevOps** (o **Jira**) en el
 - Puedo registrar el capital invertido, su moneda y marcar si fue prestado.
 - Si fue prestado, puedo indicar el monto del préstamo.
 - El resumen (en DOP) muestra: ingresos, capital, ganancia total, devolución de préstamo y ganancia propia.
+- Los ingresos se calculan multiplicando el precio de venta por la cantidad de cada producto: `Ingresos = Σ(precio × cantidad × tasa a DOP)`.
 - Con capital prestado: `Ganancia propia = Ganancia total − Devolución de préstamo`.
 - Si el capital no fue prestado, la devolución se oculta y `Ganancia propia = Ganancia total`.
 - Si la ganancia es negativa se muestra como pérdida (en rojo).

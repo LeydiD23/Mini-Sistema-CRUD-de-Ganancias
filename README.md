@@ -7,11 +7,11 @@ Proyecto base para la **Tarea 4: Pruebas Automatizadas con Selenium**.
 ## Funcionalidades
 
 - **Inicio de sesión** simulado con credenciales fijas: `admin` / `admin123`.
-- **CRUD de productos** (crear, listar, editar para corregir cifras, eliminar) con nombre, costo original, precio de venta y moneda.
+- **CRUD de productos** (crear, listar, editar para corregir cifras, eliminar) con nombre, cantidad comprada, costo original, precio de venta y moneda.
 - **Capital gastado**: monto invertido manualmente, con opción de indicar que fue **prestado por una tercera persona** y el monto del préstamo.
 - **Tasas de cambio** configurables a DOP (USD y EUR).
 - **Resumen de ganancias en DOP**:
-  - Ingresos si se vende todo
+  - Ingresos si se vende todo (precio de venta × cantidad de cada producto)
   - Capital gastado
   - Ganancia total
   - Devolución de préstamo (si el capital fue prestado)
