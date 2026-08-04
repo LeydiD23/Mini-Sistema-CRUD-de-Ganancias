@@ -1,0 +1,269 @@
+:root {
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --primary: #1f6feb;
+  --primary-dark: #1558b0;
+  --danger: #d1242f;
+  --ok: #1a7f37;
+  --text: #1f2328;
+  --muted: #59636e;
+  --border: #d1d9e0;
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.view {
+  padding: 24px;
+}
+
+/* ---------- Login ---------- */
+#login-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+}
+
+.login-card h1 {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+.hint {
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ---------- Tarjetas ---------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.card h2 {
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 8px;
+}
+
+/* ---------- Topbar ---------- */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto 20px;
+}
+
+.topbar h1 {
+  font-size: 1.3rem;
+}
+
+.user-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ---------- Grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Formularios ---------- */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+label.checkbox {
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+input,
+select {
+  padding: 9px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+input:disabled {
+  background: #f3f4f6;
+  color: var(--muted);
+}
+
+button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--primary-dark);
+}
+
+.btn-secondary {
+  background: #eaeef2;
+  color: var(--text);
+}
+
+.btn-secondary:hover {
+  background: #d8dee4;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ---------- Tabla ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.empty {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.acciones {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-editar {
+  background: #0969da;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+}
+
+.btn-eliminar {
+  background: var(--danger);
+  padding: 6px 10px;
+  font-size: 0.8rem;
+}
+
+/* ---------- Mensajes ---------- */
+.msg {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.msg.error {
+  color: var(--danger);
+}
+
+.msg.ok {
+  color: var(--ok);
+}
+
+/* ---------- Resumen ---------- */
+.resumen-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.resumen-row .label {
+  color: var(--muted);
+}
+
+.resumen-row .value {
+  font-weight: 700;
+}
+
+.resumen-row.destacado {
+  border-bottom: none;
+  margin-top: 6px;
+  padding: 12px 10px;
+  background: #e6f4ea;
+  border-radius: 6px;
+}
+
+.resumen-row.destacado .value {
+  color: var(--ok);
+  font-size: 1.2rem;
+}
+
+.perdida {
+  color: var(--danger) !important;
+}

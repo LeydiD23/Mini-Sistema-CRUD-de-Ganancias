@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Sistema de Ganancias</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ============ LOGIN ============ -->
+  <section id="login-view" class="view">
+    <div class="card login-card">
+      <h1>Mini Sistema de Ganancias</h1>
+      <p class="subtitle">Inicia sesión para continuar</p>
+      <form id="login-form" novalidate>
+        <label for="login-usuario">Usuario</label>
+        <input type="text" id="login-usuario" name="usuario" autocomplete="username" placeholder="usuario">
+
+        <label for="login-contrasena">Contraseña</label>
+        <input type="password" id="login-contrasena" name="contrasena" autocomplete="current-password" placeholder="contraseña">
+
+        <button type="submit" id="login-btn">Entrar</button>
+        <p id="login-error" class="msg error" hidden></p>
+      </form>
+      <p class="hint">Credenciales de prueba: admin / admin123</p>
+    </div>
+  </section>
+
+  <!-- ============ APLICACIÓN ============ -->
+  <section id="app-view" class="view" hidden>
+    <header class="topbar">
+      <h1>Mini Sistema de Ganancias</h1>
+      <div class="user-box">
+        <span id="bienvenida">Hola, </span>
+        <button type="button" id="logout-btn" class="btn-secondary">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <main class="grid">
+
+      <!-- Formulario producto -->
+      <section class="card">
+        <h2>Registrar producto</h2>
+        <form id="producto-form" novalidate>
+          <input type="hidden" id="prod-id">
+          <label for="prod-nombre">Nombre del producto</label>
+          <input type="text" id="prod-nombre" placeholder="Ej: Camisa">
+
+          <label for="prod-costo">Costo original (por unidad)</label>
+          <input type="number" id="prod-costo" min="0" step="0.01" placeholder="Ej: 500">
+
+          <label for="prod-precio">Precio de venta</label>
+          <input type="number" id="prod-precio" min="0" step="0.01" placeholder="Ej: 750">
+
+          <label for="prod-moneda">Moneda</label>
+          <select id="prod-moneda">
+            <option value="DOP" selected>Peso dominicano (DOP)</option>
+            <option value="USD">Dólar (USD)</option>
+            <option value="EUR">Euro (EUR)</option>
+          </select>
+
+          <div class="form-actions">
+            <button type="submit" id="prod-save-btn">Guardar producto</button>
+            <button type="button" id="prod-reset-btn" class="btn-secondary">Limpiar</button>
+          </div>
+          <p id="prod-msg" class="msg" hidden></p>
+        </form>
+      </section>
+
+      <!-- Lista de productos -->
+      <section class="card">
+        <h2>Mis productos</h2>
+        <p id="sin-productos" class="empty">No hay productos registrados todavía.</p>
+        <table id="tabla-productos" hidden>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Costo</th>
+              <th>Precio venta</th>
+              <th>Moneda</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="productos-tbody"></tbody>
+        </table>
+      </section>
+
+      <!-- Capital y préstamo -->
+      <section class="card">
+        <h2>Capital gastado</h2>
+        <form id="capital-form" novalidate>
+          <label for="cap-monto">Capital invertido en los productos</label>
+          <input type="number" id="cap-monto" min="0" step="0.01" placeholder="Ej: 10000">
+
+          <label for="cap-moneda">Moneda del capital</label>
+          <select id="cap-moneda">
+            <option value="DOP" selected>Peso dominicano (DOP)</option>
+            <option value="USD">Dólar (USD)</option>
+            <option value="EUR">Euro (EUR)</option>
+          </select>
+
+          <label class="checkbox">
+            <input type="checkbox" id="cap-prestado">
+            El capital fue prestado por una tercera persona
+          </label>
+
+          <label for="cap-monto-prestamo">Monto prestado (misma moneda)</label>
+          <input type="number" id="cap-monto-prestamo" min="0" step="0.01" placeholder="Ej: 8000" disabled>
+
+          <button type="submit" id="cap-save-btn">Guardar capital</button>
+          <p id="cap-msg" class="msg" hidden></p>
+        </form>
+      </section>
+
+      <!-- Tasas de cambio -->
+      <section class="card">
+        <h2>Tasas de cambio a DOP</h2>
+        <form id="tasas-form" novalidate>
+          <label for="tasa-usd">1 USD = DOP</label>
+          <input type="number" id="tasa-usd" min="0.01" step="0.01" placeholder="Ej: 60">
+
+          <label for="tasa-eur">1 EUR = DOP</label>
+          <input type="number" id="tasa-eur" min="0.01" step="0.01" placeholder="Ej: 70">
+
+          <button type="submit" id="tasas-save-btn">Guardar tasas</button>
+          <p id="tasas-msg" class="msg" hidden></p>
+        </form>
+      </section>
+
+      <!-- Resumen -->
+      <section class="card resumen">
+        <h2>Resumen de ganancias (en DOP)</h2>
+        <div class="resumen-row">
+          <span class="label">Ingresos si se vende todo</span>
+          <span class="value" id="res-ingresos" data-valor="0">DOP 0.00</span>
+        </div>
+        <div class="resumen-row">
+          <span class="label">Capital gastado</span>
+          <span class="value" id="res-capital" data-valor="0">DOP 0.00</span>
+        </div>
+        <div class="resumen-row">
+          <span class="label">Ganancia total</span>
+          <span class="value" id="res-ganancia-total" data-valor="0">DOP 0.00</span>
+        </div>
+        <div class="resumen-row" id="res-devolucion-row" hidden>
+          <span class="label">Devolución de préstamo</span>
+          <span class="value" id="res-devolucion" data-valor="0">DOP 0.00</span>
+        </div>
+        <div class="resumen-row destacado">
+          <span class="label">Ganancia propia</span>
+          <span class="value" id="res-ganancia-propia" data-valor="0">DOP 0.00</span>
+        </div>
+      </section>
+
+    </main>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

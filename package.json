@@ -1,0 +1,20 @@
+{
+  "name": "mini-sistema-ganancias",
+  "version": "1.0.0",
+  "description": "Mini sistema de ganancias de mercancia con CRUD y login. Base para pruebas automatizadas con Selenium (Tarea 4).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "mocha tests --recursive --reporter mochawesome --reporter-options reportDir=report,reportFilename=test-results",
+    "test:spec": "mocha tests --recursive"
+  },
+  "keywords": [],
+  "author": "LeydiD23",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "mocha": "^11.8.0",
+    "mochawesome": "^8.0.1",
+    "selenium-webdriver": "^4.46.0"
+  }
+}
