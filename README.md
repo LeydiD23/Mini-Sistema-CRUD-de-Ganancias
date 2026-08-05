@@ -31,8 +31,3 @@ npm test
 
 El reporte HTML queda en `report/test-results.html` y las capturas automáticas en `screenshots/`.
 
-## Enlaces
-
-- Repositorio: https://github.com/LeydiD23/Mini-Sistema-CRUD-de-Ganancias
-- Tablero de historias de usuario (Jira): [agregar enlace del tablero]
-- Video demostrativo: [agregar enlace del video]
