@@ -33,6 +33,6 @@ El reporte HTML queda en `report/test-results.html` y las capturas automáticas 
 
 ## Enlaces
 
-- Repositorio: [agregar enlace de GitHub]
+- Repositorio: https://github.com/LeydiD23/Mini-Sistema-CRUD-de-Ganancias
 - Tablero de historias de usuario (Jira): [agregar enlace del tablero]
 - Video demostrativo: [agregar enlace del video]
